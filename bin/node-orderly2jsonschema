@@ -1,0 +1,22 @@
+#!/usr/bin/env node
+
+//
+// Usage:  node-orderly2jsonschema [.orderly file] [.jsonschema outfile]
+//
+//   Takes .orderly file as input
+//   Writes .jsonschema file as output
+//
+//   Currently assumes utf-8 encoding for both files
+//
+
+var libdir = __dirname + "/../lib"
+require.paths.push(libdir);
+
+var orderly = require("orderly");
+var fs = require("fs");
+
+var args        = process.argv.splice(2);
+var orderlyData = fs.readFileSync(args[0], "utf-8");
+var jsonSchema  = orderly.compile(orderlyData);
+fs.writeFileSync(args[1], jsonSchema, "utf-8");
+
